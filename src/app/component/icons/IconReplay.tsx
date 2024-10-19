@@ -2,7 +2,6 @@ import React, { ComponentProps } from "react";
 
 const IconReplay = (props:ComponentProps<"svg">) => {
   return (
-    <div>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -22,7 +21,6 @@ const IconReplay = (props:ComponentProps<"svg">) => {
           d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
         />
       </svg>
-    </div>
   );
 };
 
