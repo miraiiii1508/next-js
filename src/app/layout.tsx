@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { manrope } from "./ultils";
-import SideBar from "./component/layout/SideBar";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "./component/common/ThemeProvider";
 
