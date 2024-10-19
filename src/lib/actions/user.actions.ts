@@ -1,8 +1,7 @@
 'use server'
-
-import User, { IUser } from "@/database/user.modal";
-import { connectDB } from "../moogose"
+import User from "@/database/user.modal";
 import { TCreateUserParam } from "@/type/type";
+import { connectDB } from "../moogose";
 
 export default async function createUser(params:TCreateUserParam){
     try{

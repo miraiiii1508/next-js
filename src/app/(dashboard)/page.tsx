@@ -5,7 +5,7 @@ import { CourseGrid } from "../component/common";
 import createUser from "@/lib/actions/user.actions";
 
 const page = async() => {
-  const newUser = await createUser({
+   await createUser({
     cleckId:'133',
     email_address:'hehe@.com',
     userName:'dcm'

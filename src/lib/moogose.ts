@@ -15,6 +15,6 @@ export const connectDB = async () => {
         console.log("Using new Database");
     }
     catch(error){
-        console.log("connect Error")
+        console.log("connect Error",error)
     }
 }
