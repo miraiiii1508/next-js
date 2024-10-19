@@ -7,4 +7,11 @@ type ActiveLinkProps ={
     url: string,
     children: React.ReactNode,
 }
-export { TMenuItem ,ActiveLinkProps};
+type TCreateUserParam ={
+  cleckId:string,
+  userName:string,
+  email_address:string,
+  name?:string,
+  avatar?:string,
+}
+export { TMenuItem ,ActiveLinkProps,TCreateUserParam};
