@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { manrope } from "./ultils";
 import SideBar from "./component/layout/SideBar";
+import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "./component/common/ThemeProvider";
 
 export const metadata: Metadata = {
   title: "Lammm's Web Dev Blog",
@@ -14,14 +16,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={manrope.className}>
-        <div className="wrapper grid grid-cols-[300px,minmax(0,1fr)] h-screen">
-       <SideBar/>
-          <main>{children}</main>
-        </div>
-        
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={manrope.className}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
