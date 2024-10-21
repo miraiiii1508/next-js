@@ -1,29 +1,29 @@
 import { EUserRole, userStatus } from "@/type/enum";
 import { Document, model, models, Schema } from "mongoose";
 export interface IUser extends Document {
-  cleckId: string;
+  clerkId: string;
   name: string;
-  userName: string;
-  email_address: string;
+  username: string;
+  email: string;
   avatar: string;
   course: Schema.Types.ObjectId[];
   status: userStatus;
   role: EUserRole;
-  createdAt: Date;
+  created_at: Date;
 }
 const userSchema = new Schema<IUser>({
-  cleckId: {
+  clerkId: {
     type: String,
   },
   name: {
     type: String,
   },
-  userName: {
+  username: {
     type: String,
     unique:true,
     require:true
   },
-  email_address: {
+  email: {
     type: String,
     unique:true,
     require:true
@@ -37,7 +37,7 @@ const userSchema = new Schema<IUser>({
       ref: "Course",
     },
   ],
-  createdAt: {
+  created_at: {
     type: Date,
     default:Date.now
   },
