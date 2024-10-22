@@ -8,9 +8,9 @@ type ActiveLinkProps ={
     children: React.ReactNode,
 }
 type TCreateUserParam ={
-  cleckId:string,
-  userName:string,
-  email_address:string,
+  clerkId:string,
+  username:string,
+  email:string,
   name?:string,
   avatar?:string,
 }
