@@ -1,8 +1,6 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { number, z } from "zod";
+import { UploadButton } from "@/app/ultils/uploadthing";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,16 +11,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
-import slugify from "slugify";
-import { Textarea } from "@/components/ui/textarea";
-import { ECourseLevel, ECourseStatus } from "@/type/enum";
-import { updatecourse } from "@/lib/actions/course.actions";
-import { ICourse } from "@/database/course.modal";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
-import { useImmer } from "use-immer";
-import { IconAdd } from "../icons";
 import {
   Select,
   SelectContent,
@@ -30,9 +18,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { courseLevel, courseStatus } from "@/constants";
-import { UploadButton } from "@/app/ultils/uploadthing";
+import { ICourse } from "@/database/course.modal";
+import { updatecourse } from "@/lib/actions/course.actions";
+import { ECourseLevel, ECourseStatus } from "@/type/enum";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useImmer } from "use-immer";
+import { z } from "zod";
+import { IconAdd } from "../icons";
 const formSchema = z.object({
   title: z.string().min(10, "Tên khoá học ít nhất 10 kí tự !"),
   slug: z.string().optional(),

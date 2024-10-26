@@ -1,6 +1,7 @@
 import React from 'react'
 
-const page = ({ searchParams }: { searchParams: { slug: string } }) => {
+const page = () => {
+  //{ searchParams }: { searchParams: { slug: string } }
   return (
     <div>
       page
