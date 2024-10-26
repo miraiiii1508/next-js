@@ -4,7 +4,7 @@ type TMenuItem = {
   url: string;
   title: string;
   icon?: React.ReactNode;
-  OnlyIcon?:Boolean
+  OnlyIcon?:boolean
 };
 type ActiveLinkProps ={
     url: string,
@@ -20,7 +20,7 @@ type TCreateUserParam ={
 type TCreateCourse={
 title:string,
 slug:string,
-author:String
+author:string
 }
 type TUpdateCourseParam={
 slug :string,
