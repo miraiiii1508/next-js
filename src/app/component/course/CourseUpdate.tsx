@@ -289,7 +289,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
           <FormField
             control={form.control}
             name="image"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Ảnh đại diện</FormLabel>
                 <FormControl>
@@ -330,7 +330,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
           <FormField
             control={form.control}
             name="infor.requirement"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel className="flex items-center justify-between gap-5">
                   <span>Yêu cầu</span>
@@ -351,7 +351,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                     {courseInfo.requirement.map((item, index) => (
                       <Input
                         value={item}
-                        onChange={(e: any) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setCourseInfor((draft) => {
                             draft.requirement[index] = e.target.value;
                           });
@@ -369,7 +369,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
           <FormField
             control={form.control}
             name="infor.benifit"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel className="flex items-center justify-between gap-5">
                   <span>Lợi ích</span>
@@ -389,7 +389,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                   {courseInfo.benifit.map((item, index) => (
                     <Input
                       value={item}
-                      onChange={(e: any) => {
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setCourseInfor((draft) => {
                           draft.benifit[index] = e.target.value;
                         });
@@ -406,7 +406,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
           <FormField
             control={form.control}
             name="infor.qa"
-            render={({ field }) => (
+            render={() => (
               <FormItem className="col-start-1 col-end-3">
                 <FormLabel className="flex items-center justify-between gap-5">
                   <span>Q&A</span>
@@ -431,7 +431,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                       <div className="grid grid-cols-2 gap-5" key={index}>
                         <Input
                           value={item.question}
-                          onChange={(e: any) => {
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             setCourseInfor((draft) => {
                               draft.qa[index].question = e.target.value;
                             });
@@ -440,7 +440,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                         ></Input>
                         <Input
                           value={item.answer}
-                          onChange={(e: any) => {
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             setCourseInfor((draft) => {
                               draft.qa[index].answer = e.target.value;
                             });
