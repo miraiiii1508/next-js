@@ -1,17 +1,26 @@
-'use server'
-import User from "@/database/user.modal";
+"use server";
+import User, { IUser } from "@/database/user.modal";
 import { TCreateUserParam } from "@/type/type";
 import { connectDB } from "../moogose";
 
-export default async function createUser(params:TCreateUserParam){
-    try{
-        connectDB()
-        const newUser = await User.create(params)
-        return newUser
-        
+export  async function createUser(params: TCreateUserParam) {
+  try {
+    connectDB();
+    const newUser = await User.create(params);
+    return newUser;
+  } catch (e) {
+    console.error(e);
+  }
+}
+export  async function getUserId({userId}: { userId: string }):Promise<IUser | null |undefined > {
+  try {
+    connectDB()
+    const findUser = await User.findOne({clerkId :userId})
+    if(!findUser){
+        return null
     }
-    catch(e){
-        console.error(e);
-        
-    }
+    return findUser
+  } catch (e) {
+    console.error(e);
+  }
 }
