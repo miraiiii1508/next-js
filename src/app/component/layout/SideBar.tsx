@@ -7,7 +7,7 @@ import { ModeToggle } from "../common/ModeToggle";
 
 const SideBar = () => {
   return (
-    <div className="bg-white dark:bg-grayDarkNest dark:border-opacity-10 p-5 border-r border-r-gray-200 flex flex-col">
+    <div className="hidden lg:flex flex-col borderDarkMode bgDarkMode p-5 border-r border-r-gray-200 fixed bottom-0 left-0 top-0 w-[300px]">
       <a href="/" className="logo font-bold text-3xl inline-block mb-4">
         Web Dev
       </a>
@@ -30,11 +30,11 @@ const SideBar = () => {
     </div>
   );
 };
-function MenuItem({ url = "/", title = "", icon }: TMenuItem) {
+export function MenuItem({ url = "/", title = "", icon ,OnlyIcon }: TMenuItem) {
   return (
     <li>
       <ActiveLink url={url}>
-        {icon} {title}
+        {icon} {OnlyIcon ?null: title}
       </ActiveLink>
     </li>
   );

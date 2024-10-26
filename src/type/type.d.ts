@@ -1,7 +1,10 @@
+import { ICourse } from "@/database/course.modal";
+
 type TMenuItem = {
   url: string;
   title: string;
   icon?: React.ReactNode;
+  OnlyIcon?:boolean
 };
 type ActiveLinkProps ={
     url: string,
@@ -14,4 +17,14 @@ type TCreateUserParam ={
   name?:string,
   avatar?:string,
 }
-export { TMenuItem ,ActiveLinkProps,TCreateUserParam};
+type TCreateCourse={
+title:string,
+slug:string,
+author:string
+}
+type TUpdateCourseParam={
+slug :string,
+updateData:Partial<ICourse>
+path?:string
+}
+export { TMenuItem ,ActiveLinkProps,TCreateUserParam,TCreateCourse,TUpdateCourseParam};
