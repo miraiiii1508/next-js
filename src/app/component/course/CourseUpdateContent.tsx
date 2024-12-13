@@ -110,8 +110,8 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateLecture }) => {
         setLectureEdit("");
         setLectureIdIndex("");
       }
-    } catch (e: any) {
-      toast.error(e);
+    } catch (e) {
+      console.error(e);
     }
   };
   const handleUpdateLesson = async (
@@ -137,8 +137,8 @@ const CourseUpdateContent = ({ course }: { course: TCourseUpdateLecture }) => {
         setLessonEdit("");
         setLessonIdIndex("");
       }
-    } catch (e: any) {
-      toast.error(e);
+    } catch (e) {
+      console.error(e);
     }
   };
   return (

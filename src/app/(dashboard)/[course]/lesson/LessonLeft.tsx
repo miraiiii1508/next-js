@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect } from "react";
-import LessonNavigation from "./LessonNavigation";
 import Heading from "@/app/component/typography/Heading";
+import { useEffect } from "react";
 import VideoPlayer from "./@player/VideoPlayer";
+import { ILesson } from "@/database/lesson.modal";
+import { ILastLesson } from "@/type/type";
 
 const LessonLeft = ({
   video,
@@ -14,15 +15,17 @@ const LessonLeft = ({
   url,
 }: {
   video: string;
-  nextLesson: any;
-  prevLesson: any;
+  nextLesson: ILesson | undefined;
+  prevLesson: ILesson |undefined;
   course: string;
   title: string | undefined;
   content: string | undefined;
   url: string;
 }) => {
+  console.log(nextLesson);
+  
   useEffect(() => {
-    let results: any[] =
+    let results: ILastLesson[] =
       JSON.parse(localStorage?.getItem("LastLesson") || "[]") || [];
     const item = {
       course,

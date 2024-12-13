@@ -6,7 +6,7 @@ const VideoPlayer = ({
   nextLesson,
   prevLesson,
 }: {
-  video: any;
+  video: string;
   nextLesson: string;
   prevLesson: string;
 }) => {

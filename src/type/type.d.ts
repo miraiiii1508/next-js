@@ -58,6 +58,11 @@ export type TUpdateCourseLecture ={
 export interface TCourseUpdateLecture extends Omit<ICourse, "lectures"> {
   lectures: TUpdateCourseLecture[];
 }
+export interface ILastLesson {
+  course:string,
+  lesson:string
+}
+
 export type TCReateLessonParams = {
   lecture: string;
   course: string;

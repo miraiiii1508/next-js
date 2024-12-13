@@ -15,7 +15,8 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import { Editor } from "@tinymce/tinymce-react";
+import { Editor } from '@tinymce/tinymce-react';
+import { Editor as TinyMCEEditor } from 'tinymce';
 import { useRef } from "react";
 import { editorOptions } from "@/constants";
 import { useTheme } from "next-themes";
@@ -26,7 +27,7 @@ const formSchema = z.object({
   content: z.string().optional(),
 });
 const LessonItemUpdate = ({ lesson }: { lesson: ILesson }) => {
-    const editorRef = useRef<any>(null);
+  const editorRef = useRef<TinyMCEEditor | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,6 +53,7 @@ const LessonItemUpdate = ({ lesson }: { lesson: ILesson }) => {
     }
   }
   const theme = useTheme()
+  const currentTheme = theme.theme === "dark" ? "dark" : "light";
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -111,7 +113,7 @@ const LessonItemUpdate = ({ lesson }: { lesson: ILesson }) => {
                       );
                     }}
                     value={field.value}
-                    {...editorOptions(field, theme)}
+                    {...editorOptions(field, currentTheme)}
                   />
                 </FormControl>
               </FormItem>

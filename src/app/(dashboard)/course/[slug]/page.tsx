@@ -1,20 +1,17 @@
 import { IconReplay } from "@/app/component/icons";
-import { Button } from "@/components/ui/button";
-import { courseLevelTitle } from "@/constants";
-import { getCourseBySlug } from "@/lib/actions/course.actions";
-import { ECourseLevel, ECourseStatus } from "@/type/enum";
-import Image from "next/image";
-import React from "react";
+import LessonContent from "@/app/component/lesson/LessonContent";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { ILecture } from "@/database/lecture.modal";
-import { TUpdateCourseLecture } from "@/type/type";
-import LessonItem from "@/app/component/lesson/LessonItem";
-import LessonContent from "@/app/component/lesson/LessonContent";
+import { Button } from "@/components/ui/button";
+import { courseLevelTitle } from "@/constants";
+import { getCourseBySlug } from "@/lib/actions/course.actions";
+import { ECourseLevel, ECourseStatus } from "@/type/enum";
+import Image from "next/image";
+import React from "react";
 const page = async ({ params }: { params: { slug: string } }) => {
   const data = await getCourseBySlug({ slug: params.slug });
   const lecture = data?.lectures || [];
