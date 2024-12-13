@@ -1,11 +1,10 @@
 "use server";
-import User, { IUser } from "@/database/user.modal";
-import { TCreateUserParam } from "@/type/type";
-import { connectDB } from "../moogose";
-import { auth } from "@clerk/nextjs/server";
-import { findDOMNode } from "react-dom";
 import Course, { ICourse } from "@/database/course.modal";
+import User, { IUser } from "@/database/user.modal";
 import { ECourseStatus } from "@/type/enum";
+import { TCreateUserParam } from "@/type/type";
+import { auth } from "@clerk/nextjs/server";
+import { connectDB } from "../moogose";
 
 export async function createUser(params: TCreateUserParam) {
   try {

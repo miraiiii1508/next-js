@@ -1,5 +1,4 @@
 import { ICourse } from "@/database/course.modal";
-import { ILecture } from "@/database/lecture.modal";
 import { ILesson } from "@/database/lesson.modal";
 
 type TMenuItem = {
