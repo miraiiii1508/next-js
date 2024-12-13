@@ -4,7 +4,7 @@ import React from "react";
 import { IconEye, IconStar } from "../icons";
 import { ICourse } from "@/database/course.modal";
 
-const CourseItem = ({ data }: { data: ICourse }) => {
+const CourseItem = ({ data,cta ,url=''}: { data: ICourse,cta?:string ,url?:string}) => {
   const courseInfor = [
     {
       title: data.views ? data.views.toLocaleString("de-DE") : "0",
@@ -15,10 +15,10 @@ const CourseItem = ({ data }: { data: ICourse }) => {
       icon: (className?: string) => <IconStar className={className} aria-hidden="true" />,
     },
   ];
-
+  const urlCourse = url ?url :`/course/${data.slug}`
   return (
     <div className="bg-white dark:bg-grayDarker dark:border-opacity-10 border-gray-200 p-4 rounded-2xl h-full flex flex-col">
-      <Link href={`/course/${data.slug}`} className="block h-[180px] relative">
+      <Link href={urlCourse} className="block h-[180px] relative">
         <Image
           alt=""
           src={data.img}
@@ -49,10 +49,10 @@ const CourseItem = ({ data }: { data: ICourse }) => {
             </span>
           </div>
           <Link
-            href={`/course/${data.slug}`}
-            className="flex items-center justify-center w-full rounded-lg text-white bg-primary font-semibold h-12"
+            href={urlCourse}
+            className="flex items-center justify-center w-full rounded-lg text-white bg-primary font-semibold h-12 button-primary"
           >
-            Xem chi tiết
+           {cta || 'Xem chi tiết'}
           </Link>
         </div>
       </div>

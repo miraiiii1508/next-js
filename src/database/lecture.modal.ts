@@ -4,7 +4,7 @@ export interface ILecture extends Document{
     _id:string,
     title:string,
     created_at :Date,
-    course:Schema.Types.ObjectId,
+    courseId:Schema.Types.ObjectId,
     lesson:Schema.Types.ObjectId[],
     _destroy:boolean
 
@@ -20,9 +20,9 @@ const LectureSchema = new Schema<ILecture>({
     },
     _destroy:{
         type:Boolean,
-        defaule:false
+        default:false
     },
-    course:{
+    courseId:{
         type:Schema.Types.ObjectId,
         ref:'Course'
     },
@@ -34,5 +34,6 @@ const LectureSchema = new Schema<ILecture>({
     ]
 })
 
-const Lecture = models.Course || model<ILecture>("Lecture" ,LectureSchema)
+
+const Lecture = models.Lecture || model<ILecture>("Lecture" ,LectureSchema)
 export default Lecture;

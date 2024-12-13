@@ -1,5 +1,13 @@
 "use client";
-import React from "react";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -8,35 +16,44 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Heading from "../typography/Heading";
-import Image from "next/image";
 import { commonClassName, courseStatus } from "@/constants";
-import { cn } from "@/lib/utils";
-import IconEdit from "../icons/IconEdit";
-import { IconEye, IconStudy } from "../icons";
-import IconDelete from "../icons/IconDelete";
-import Link from "next/link";
-import Swal from "sweetalert2";
 import { ICourse } from "@/database/course.modal";
 import { updatecourse } from "@/lib/actions/course.actions";
+import { cn } from "@/lib/utils";
 import { ECourseStatus } from "@/type/enum";
+import Image from "next/image";
+import Link from "next/link";
 import { toast } from "react-toastify";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import Swal from "sweetalert2";
+import { IconEye, IconStudy } from "../icons";
+import IconDelete from "../icons/IconDelete";
+import IconEdit from "../icons/IconEdit";
+import IconNext from "../icons/IconNext";
+import IconPrev from "../icons/IconPrev";
+import Heading from "../typography/Heading";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { debounce } from "lodash";
 const CourseManage = ({ data }: { data: ICourse[] }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
   const handleChangeStatus = async (slug: string, status: ECourseStatus) => {
     try {
       Swal.fire({
-        customClass: {
-          confirmButton:
-            "text-[#3085d6] bg-[#3085d6] bg-opacity-30 p-3 rounded-lg mr-2",
-          cancelButton: "text-[#d33] bg-[#d33] bg-opacity-30 p-3 rounded-lg",
-        },
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        title: "Bạn có muốn cập nhật trạng thái ?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, update it!",
+        cancelButtonText:'Huỷ',
+        confirmButtonText: "Đồng ý",
       }).then(async (result) => {
         if (result.isConfirmed) {
           await updatecourse({
@@ -51,6 +68,7 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
             path: "/manage/course",
           });
           toast.success("Thay đổi trạng thái thành công!");
+          router.push(`${pathname}?${createQueryString("status", "")}`);
         }
       });
     } catch (e) {
@@ -60,16 +78,12 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
   const handleDeleteCourse = (slug: string) => {
     try {
       Swal.fire({
-        customClass: {
-          confirmButton:
-            "text-[#3085d6] bg-[#3085d6] bg-opacity-30 p-3 rounded-lg mr-2",
-          cancelButton: "text-[#d33] bg-[#d33] bg-opacity-30 p-3 rounded-lg",
-        },
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
+
+        title: "Bạn có chắc chắn xoá ?",
+        icon: "error",
         showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
+        cancelButtonText:'Huỷ',
+        confirmButtonText: "Xác nhận",
       }).then(async (result) => {
         if (result.isConfirmed) {
           await updatecourse({
@@ -87,9 +101,27 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
       console.error(e);
     }
   };
+  const handleSelectStatus = (status: ECourseStatus) => {
+    router.push(`${pathname}?${createQueryString("status", status)}`);
+  };
+  const handleOnChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+    router.push(`${pathname}?${createQueryString("search", e.target.value)}`);
+  }, 500);
+  const [page, setPage] = useState(1);
+  const handleChangePage = (type: "prev" | "next") => {
+    if (type === "prev" && page === 1) return;
+    if (type === "prev") setPage((prev) => prev - 1);
+    if (type === "next") setPage((next) => next + 1);
+  };
+  useEffect(() => {
+    router.push(`${pathname}?${createQueryString("page", page.toString())}`);
+  }, [page]);
   return (
     <>
-      <Link href={"/manage/course/new"} className="flexCenter bg-primary text-white fixed right-5 bottom-5 rounded-full size-10 animate-bounce">
+      <Link
+        href={"/manage/course/new"}
+        className="flexCenter bg-primary text-white fixed right-5 bottom-5 rounded-full size-10 animate-bounce"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -107,8 +139,31 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
       </Link>
       <div className="flex flex-col lg:flex-row lg:items-center gap-5 justify-between mb-10 ">
         <Heading>Quản lý khoá học</Heading>
-        <div className="w-full lg:w-[300px]">
-          <Input placeholder="Tìm kiếm khoá học..." />
+        <div className="flex gap-3">
+          <div className="w-full lg:w-[300px]">
+            <Input
+              placeholder="Tìm kiếm khoá học..."
+              onChange={(e) => handleOnChange(e)}
+            />
+          </div>
+          <Select
+            onValueChange={(value) =>
+              handleSelectStatus(value as ECourseStatus)
+            }
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Chọn trạng thái" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {courseStatus.map((status) => (
+                  <SelectItem value={status.value} key={status.value}>
+                    {status.title}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
       <Table className="table-responsive">
@@ -202,38 +257,18 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
         </TableBody>
       </Table>
       <div className="flex justify-end gap-3 mt-5">
-        <Button className={commonClassName.paginationButton}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-            />
-          </svg>
-        </Button>
-        <Button className={commonClassName.paginationButton}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18"
-            />
-          </svg>
-        </Button>
+        <button
+          className={commonClassName.paginationButton}
+          onClick={() => handleChangePage("prev")}
+        >
+          <IconPrev />
+        </button>
+        <button
+          className={commonClassName.paginationButton}
+          onClick={() => handleChangePage("next")}
+        >
+          <IconNext />
+        </button>
       </div>
     </>
   );

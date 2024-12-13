@@ -70,6 +70,8 @@ const formSchema = z.object({
 });
 
 const CourseUpdate = ({ data }: { data: ICourse }) => {
+  console.log(data);
+  
   const route = useRouter();
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const [courseInfo, setCourseInfor] = useImmer({
@@ -293,7 +295,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
               <FormItem>
                 <FormLabel>Ảnh đại diện</FormLabel>
                 <FormControl>
-                  <div className="h-[200px] bg-white rounded-md border border-gray-200 flex justify-center items-center relative">
+                  <div className="h-[250px] bg-white rounded-md border border-gray-200 flex justify-center items-center relative">
                     {!imageWatch ? (
                       <UploadButton
                         endpoint="imageUploader"
@@ -305,7 +307,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
                         }}
                       />
                     ) : (
-                      <Image alt="" src={imageWatch} fill className="w-full h-full object-cover"/>
+                      <Image alt="" src={imageWatch} fill className="w-full h-full object-cover rounded-md"/>
                     )}
                   </div>
                 </FormControl>
@@ -321,7 +323,7 @@ const CourseUpdate = ({ data }: { data: ICourse }) => {
               <FormItem>
                 <FormLabel>Mô tả</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Nội dung..." {...field} />
+                  <Textarea placeholder="Nội dung..." {...field} className="h-[250px]"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>

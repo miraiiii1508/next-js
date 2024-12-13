@@ -1,11 +1,13 @@
-import React from "react";
-import Heading from "../component/typography/Heading";
-import CourseItem from "../component/course/CourseItem";
+import { getAllCousreHomePage } from "@/lib/actions/course.actions";
 import { CourseGrid } from "../component/common";
-import { getAllCousre } from "@/lib/actions/course.actions";
+import CourseItem from "../component/course/CourseItem";
+import Heading from "../component/typography/Heading";
 
 const page = async () => {
-  const course = (await getAllCousre()) || [];
+  const course = (await getAllCousreHomePage({
+    page:  1,
+    limit: 10,
+  })) || [];
   return (
     <div>
       <Heading>Khám phá</Heading>

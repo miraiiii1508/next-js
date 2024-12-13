@@ -11,8 +11,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { ILecture } from "@/database/lecture.modal";
+import { TUpdateCourseLecture } from "@/type/type";
+import LessonItem from "@/app/component/lesson/LessonItem";
+import LessonContent from "@/app/component/lesson/LessonContent";
 const page = async ({ params }: { params: { slug: string } }) => {
   const data = await getCourseBySlug({ slug: params.slug });
+  const lecture = data?.lectures || [];
   if (!data) return null;
   if (data.status !== ECourseStatus.APPROVED) return <></>;
   const videoId = data?.intro_url?.split("v=")[1]?.split("&")[0];
@@ -51,6 +56,8 @@ const page = async ({ params }: { params: { slug: string } }) => {
           </BoxInfor>
           <BoxInfor title="Thời lượng">{`45 phút`}</BoxInfor>
         </div>
+        <h2 className="font-bold text-xl mb-2">Nội dung khoá học</h2>
+        <LessonContent lectures={lecture} course=""slug="" histories={[]}/>
         <BoxSection title="Yêu cầu">
           {data?.infor.requirement.map((item, index) => (
             <div key={index} className="mb-3 flex items-center gap-2">
@@ -85,9 +92,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
               <Accordion type="single" collapsible>
                 <AccordionItem value={item.question}>
                   <AccordionTrigger>{item.question}</AccordionTrigger>
-                  <AccordionContent>
-                  {item.answer}
-                  </AccordionContent>
+                  <AccordionContent>{item.answer}</AccordionContent>
                 </AccordionItem>
               </Accordion>
             </div>
@@ -98,10 +103,10 @@ const page = async ({ params }: { params: { slug: string } }) => {
         <div className="bg-white rounded-lg p-5 ">
           <div className="flex items-center gap-2 mb-3">
             <strong className="text-primary text-xl font-bold">
-              {data?.sale_price.toLocaleString('de-DE')}đ
+              {data?.sale_price.toLocaleString("de-DE")}đ
             </strong>
             <span className="text-slate-400 line-through text-sm">
-              {data?.price.toLocaleString('de-DE')}đ
+              {data?.price.toLocaleString("de-DE")}đ
             </span>
             <span className="ml-auto inline-block px-3 py-1 rounded-lg bg-primary text-primary bg-opacity-10 font-semibold text-sm">
               {data?.price && data?.sale_price
