@@ -20,6 +20,7 @@
       stroke-dashoffset: 0;
     }
   }
+ 
 }
 @layer base {
   :root {
@@ -33,11 +34,14 @@
   .borderDarkMode {
     @apply border-gray-200 dark:border-opacity-10;
   }
- .flexCenter {
-  @apply flex items-center justify-center
- }
+  .flexCenter {
+    @apply flex items-center justify-center;
+  }
+  .skeleton{
+    @apply bg-gray-300 dark:bg-grayDarker animate-pulse
+  }
 }
-@media screen and (max-width:1023.98px) {
+@media screen and (max-width: 1023.98px) {
   .course-slider {
     display: grid;
     justify-content: flex-start;
@@ -53,32 +57,98 @@
     -webkit-overflow-scrolling: touch;
     scroll-padding: 1rem;
     grid-template-columns: unset;
-    }
-    .course-slider::-webkit-scrollbar {
-      display: none;
-      width: 0;
-    }
-    .course-slider > *{
-      scroll-snap-align: start;
-    }
-    // .responsiveSellCourse{
-    //   position: fixed;
-    //   bottom: 62px;
-    //   right: 0;
-    //   left: 0;
- 
-    // }
+  }
+  .course-slider::-webkit-scrollbar {
+    display: none;
+    width: 0;
+  }
+  .course-slider > * {
+    scroll-snap-align: start;
+  }
+  // .responsiveSellCourse{
+  //   position: fixed;
+  //   bottom: 62px;
+  //   right: 0;
+  //   left: 0;
 
+  // }
 }
 
-
-.table-responsive{
-  @media screen and (max-width:1023.98px)  {
-    th,td{
+.table-responsive {
+  @media screen and (max-width: 1023.98px) {
+    th,
+    td {
       &:not(:first-child) {
         padding-left: 50px;
       }
     }
-  } 
+  }
 }
 
+.entry-content {
+  font-size: 16px;
+  line-height: 2;
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  ol,
+  ul,
+  figure {
+    @apply mb-5;
+  }
+  ol {
+    list-style: decimal;
+  }
+  ul {
+    list-style: disc;
+  }
+  ol,
+  ul {
+    @apply pl-10;
+  }
+  a {
+    @apply underline text-primary font-medium;
+  }
+}
+.focusPrimary:focus {
+  @apply focus:ring-4 focus:ring-primary focus:ring-opacity-10;
+}
+.button-primary {
+  position: relative;
+  z-index: 2;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0%;
+    background-color: rgba(white, 0.1);
+    transition: all 0.25s linear;
+  }
+  &:hover::before{
+    left: 0;
+    width: 100%;
+  }
+}
+.swal2-container {
+  .swal2-popup {
+    @apply w-full max-w-[400px]
+  }
+  .swal2-title{
+    @apply font-bold text-xl;
+  }
+  .swal2-actions {
+    .swal2-confirm{
+      @apply bg-primary
+    }
+    .swal2-confirm,
+    .swal2-cancel{
+      @apply w-[150px]
+    }
+  }
+}

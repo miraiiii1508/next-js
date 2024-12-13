@@ -81,7 +81,50 @@ export const commonClassName = {
   status:
     "bg-opacity-10 border border-current rounded-md font-medium px-3 py-1 text-xs whitespace-nowrap",
   action:
-    "size-8 flex items-center justify-center rounded-md border p-2  text-gray-500 hover:border-opacity-80 borderDarkMode dark:bg-transparent dark:hover:border:opacity-15 ",
+    "size-8 flex items-center justify-center rounded-md border p-2 hover:text-grayDarkNest dark:hover:text-white text-gray-500 hover:border-opacity-80 borderDarkMode dark:bg-transparent dark:hover:border:opacity-15 ",
   paginationButton:
-    "size-10 flex items-center-jutify-center rounded-md borderDarkMode bgDarkMode border hover:border-primary transision-all hover:text-primary",
+    "size-10 flex items-center-jutify-center rounded-md borderDarkMode bgDarkMode border hover:border-primary transision-all hover:text-primary p-2.5",
 };
+
+
+export const editorOptions = (field: {
+  onBlur: () => void;
+  onChange: (content: string) => void;
+}, theme: 'light' | 'dark') => ({
+  initialValue: "",
+  onBlur: field.onBlur,
+  onEditorChange: (content: string) => field.onChange(content),
+  init: {
+    codesample_global_prismjs: true,
+    skin: theme === "dark" ? "oxide-dark" : "oxide",
+    height: 300,
+    menubar: false,
+    plugins: [
+      "advlist",
+      "autolink",
+      "lists",
+      "link",
+      "image",
+      "charmap",
+      "preview",
+      "anchor",
+      "searchreplace",
+      "visualblocks",
+      "codesample",
+      "fullscreen",
+      "insertdatetime",
+      "media",
+      "table",
+      "heading",
+    ],
+    toolbar:
+      "undo redo | " +
+      "codesample | bold italic forecolor | alignleft aligncenter |" +
+      "alignright alignjustify | bullist numlist |" +
+      "image |" +
+      "h1 h2 h3 h4 h5 h6 | preview | fullscreen |" +
+      "link",
+    content_style: `@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');body { font-family: Manrope,Helvetica,Arial,sans-serif; font-size:14px; line-height: 2; padding-bottom: 32px; } img { max-width: 100%; height: auto; display: block; margin: 0 auto; };`,
+  },
+});
+export const lastLessonKey ='LastLesson'
