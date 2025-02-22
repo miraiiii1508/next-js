@@ -22,15 +22,16 @@ const LessonLeft = ({
   content: string | undefined;
   url: string;
 }) => {
-  console.log(nextLesson);
   
   useEffect(() => {
     let results: ILastLesson[] =
       JSON.parse(localStorage?.getItem("LastLesson") || "[]") || [];
+      console.log(results);
+      
     const item = {
       course,
       lesson: url,
-    };
+    };   
     results = results.filter((el) => el.course !== course);
     results.push(item);
     localStorage.setItem("LastLesson", JSON.stringify(results));

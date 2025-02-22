@@ -1,4 +1,3 @@
-import { IconReplay } from "@/app/component/icons";
 import LessonContent from "@/app/component/lesson/LessonContent";
 import {
   Accordion,
@@ -6,18 +5,79 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { courseLevelTitle } from "@/constants";
 import { getCourseBySlug } from "@/lib/actions/course.actions";
+import { getUserId } from "@/lib/actions/user.actions";
 import { ECourseLevel, ECourseStatus } from "@/type/enum";
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import React from "react";
-const page = async ({ params }: { params: { slug: string } }) => {
+import CourseWidget from "../CourseWidget";
+import AlrealdyEnroll from "../AlrealdyEnroll";
+import { createResultMomo } from "@/lib/actions/PaymentMomoAction";
+import { createOrder } from "@/lib/actions/order.actions";
+import { createOrderCode } from "@/app/ultils";
+import { createResultVPN } from "@/lib/paymentVNPay";
+import { redirect } from "next/navigation";
+const page = async ({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams: { [key: string]: string | undefined };
+}) => {
   const data = await getCourseBySlug({ slug: params.slug });
+  const { userId } = auth();
   const lecture = data?.lectures || [];
   if (!data) return null;
   if (data.status !== ECourseStatus.APPROVED) return <></>;
   const videoId = data?.intro_url?.split("v=")[1]?.split("&")[0];
+  const findUser = await getUserId({ userId: userId || "" });
+  if (!findUser) return null;
+  const userCourse = findUser?.course.map((c) => c.toString());
+  const vnp_TxnRef = searchParams["vnp_TxnRef"];
+  const vnp_TransactionNo = searchParams["vnp_PayDate"];
+  const orderId = searchParams["orderId"];
+  const vpn_responseCode = searchParams["vnp_ResponseCode"];
+  const vnp_Amount = searchParams["vnp_Amount"];
+  const amount = searchParams["amount"];
+  if (orderId) {
+    const response = await createResultMomo(orderId);
+    if (response.resultCode === 0) {
+      
+      await createOrder({
+        user: findUser._id,
+        course: data._id,
+        code: createOrderCode(),
+        amount: data.price,
+        total: amount ? parseInt(amount) : 0,
+      });
+      redirect(`http://localhost:3000/course/${data.slug}`); 
+    }
+  }
+
+  if (vpn_responseCode && vpn_responseCode === "00") {
+    if (vnp_TxnRef && vnp_TransactionNo) {
+      const response = await createResultVPN({
+        orderId: vnp_TxnRef,
+        transDate: vnp_TransactionNo,
+      });
+      if (
+        response &&
+        response.vnp_ResponseCode === "00" &&
+        response.vnp_TransactionStatus === "00"
+      ) {
+        await createOrder({
+          user: findUser._id,
+          course: data._id,
+          code: createOrderCode(),
+          amount: data.price,
+          total: vnp_Amount ? parseInt(vnp_Amount) / 100 : 0
+        });
+        redirect(`http://localhost:3000/course/${data.slug}`); 
+      }
+    }
+  }
   return (
     <div className="grid lg:grid-cols-[2fr,1fr] gap-10 min-h-screen">
       <div>
@@ -54,7 +114,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
           <BoxInfor title="Thời lượng">{`45 phút`}</BoxInfor>
         </div>
         <h2 className="font-bold text-xl mb-2">Nội dung khoá học</h2>
-        <LessonContent lectures={lecture} course=""slug="" histories={[]}/>
+        <LessonContent lectures={lecture} course="" slug="" histories={[]} />
         <BoxSection title="Yêu cầu">
           {data?.infor.requirement.map((item, index) => (
             <div key={index} className="mb-3 flex items-center gap-2">
@@ -96,46 +156,11 @@ const page = async ({ params }: { params: { slug: string } }) => {
           ))}
         </BoxSection>
       </div>
-      <div className="responsiveSellCourse ">
-        <div className="bg-white rounded-lg p-5 ">
-          <div className="flex items-center gap-2 mb-3">
-            <strong className="text-primary text-xl font-bold">
-              {data?.sale_price.toLocaleString("de-DE")}đ
-            </strong>
-            <span className="text-slate-400 line-through text-sm">
-              {data?.price.toLocaleString("de-DE")}đ
-            </span>
-            <span className="ml-auto inline-block px-3 py-1 rounded-lg bg-primary text-primary bg-opacity-10 font-semibold text-sm">
-              {data?.price && data?.sale_price
-                ? Math.floor(100 - (data.sale_price / data.price) * 100)
-                : 0}
-              %
-            </span>
-          </div>
-          <h3 className="font-bold mb-3 text-sm">Khoá học bao gồm có:</h3>
-          <ul className="mb-5 flex flex-col gap-2 text-sm text-slate-500">
-            <li className="flex items-center gap-2">
-              <IconReplay className="size-4" />
-              <span>30h học</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <IconReplay className="size-4" />
-              <span>Video full Hd</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <IconReplay className="size-4" />
-              <span>Có nhóm hỗ trợ</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <IconReplay className="size-4" />
-              <span>Tài liệu kèm theo</span>
-            </li>
-          </ul>
-          <Button variant="primary" className="w-full">
-            Mua khoá học
-          </Button>
-        </div>
-      </div>
+      {userCourse?.includes(data._id.toString()) ? (
+        <AlrealdyEnroll />
+      ) : (
+        <CourseWidget data={data} userId={userId} />
+      )}
     </div>
   );
 };
@@ -147,7 +172,7 @@ function BoxInfor({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-lg p-5 ">
+    <div className="bg-white dark:bg-grayDarker rounded-lg p-5 ">
       <span className="text-sm text-slate-400 font-normal">{title}</span>
       <h4 className="font-bold">{children}</h4>
     </div>

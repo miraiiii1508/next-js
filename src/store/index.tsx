@@ -1,9 +1,10 @@
-import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { create } from "zustand";
+import { devtools, persist } from "zustand/middleware";
 
 interface GlobalState {
-    expendedPlayer : boolean
-    setExpendedPlayer: (expended:boolean)=>void
+  expendedPlayer: boolean;
+  setExpendedPlayer: (expended: boolean) => void;
+
 }
 
 const useGlobalStore = create<GlobalState>()(
@@ -11,12 +12,15 @@ const useGlobalStore = create<GlobalState>()(
     persist(
       (set) => ({
         expendedPlayer: false,
-        setExpendedPlayer: (expended) => set(({ expendedPlayer: expended })),
+        setExpendedPlayer: (expended) => set({ expendedPlayer: expended }),
+
       }),
       {
-        name: 'global-storage',
-      },
-    ),
-  ),
-)
-export default useGlobalStore
+        name: "global-storage",
+        partialize: (state) => ({ expendedPlayer: state.expendedPlayer }), 
+      }
+    )
+  )
+);
+
+export default useGlobalStore;

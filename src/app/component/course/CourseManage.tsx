@@ -18,11 +18,15 @@ import {
 } from "@/components/ui/table";
 import { commonClassName, courseStatus } from "@/constants";
 import { ICourse } from "@/database/course.modal";
+import useQueryString from "@/hooks/useQueryString";
 import { updatecourse } from "@/lib/actions/course.actions";
 import { cn } from "@/lib/utils";
 import { ECourseStatus } from "@/type/enum";
+import { debounce } from "lodash";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { IconEye, IconStudy } from "../icons";
@@ -31,28 +35,18 @@ import IconEdit from "../icons/IconEdit";
 import IconNext from "../icons/IconNext";
 import IconPrev from "../icons/IconPrev";
 import Heading from "../typography/Heading";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { debounce } from "lodash";
+import TableAction from "../common/TableAction";
 const CourseManage = ({ data }: { data: ICourse[] }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
-      return params.toString();
-    },
-    [searchParams]
-  );
+  const { createQueryString } = useQueryString();
   const handleChangeStatus = async (slug: string, status: ECourseStatus) => {
     try {
       Swal.fire({
         title: "Bạn có muốn cập nhật trạng thái ?",
         icon: "warning",
         showCancelButton: true,
-        cancelButtonText:'Huỷ',
+        cancelButtonText: "Huỷ",
         confirmButtonText: "Đồng ý",
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -78,11 +72,10 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
   const handleDeleteCourse = (slug: string) => {
     try {
       Swal.fire({
-
         title: "Bạn có chắc chắn xoá ?",
         icon: "error",
         showCancelButton: true,
-        cancelButtonText:'Huỷ',
+        cancelButtonText: "Huỷ",
         confirmButtonText: "Xác nhận",
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -108,7 +101,11 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
     router.push(`${pathname}?${createQueryString("search", e.target.value)}`);
   }, 500);
   const [page, setPage] = useState(1);
-  const handleChangePage = (type: "prev" | "next") => {
+  const handleChangePage = (
+    type: "prev" | "next",
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
     if (type === "prev" && page === 1) return;
     if (type === "prev") setPage((prev) => prev - 1);
     if (type === "next") setPage((next) => next + 1);
@@ -242,14 +239,13 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
                     >
                       <IconEdit />
                     </Link>
-                    <button
+
+                    <TableAction
+                      type="delete"
                       onClick={() => {
                         handleDeleteCourse(item?.slug);
                       }}
-                      className={commonClassName.action}
-                    >
-                      <IconDelete />
-                    </button>
+                    />
                   </div>
                 </TableCell>
               </TableRow>
@@ -258,14 +254,16 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
       </Table>
       <div className="flex justify-end gap-3 mt-5">
         <button
+          type="button"
           className={commonClassName.paginationButton}
-          onClick={() => handleChangePage("prev")}
+          onClick={(e) => handleChangePage("prev", e)}
         >
           <IconPrev />
         </button>
         <button
+          type="button"
           className={commonClassName.paginationButton}
-          onClick={() => handleChangePage("next")}
+          onClick={(e) => handleChangePage("next", e)}
         >
           <IconNext />
         </button>

@@ -8,7 +8,6 @@ const page = async ({
 }: {
   searchParams: { page: number; search: string; status: ECourseStatus };
 }) => {
-  console.log(searchParams);
 
   const course = await getAllCousreAdmin({
     page: searchParams.page || 1,

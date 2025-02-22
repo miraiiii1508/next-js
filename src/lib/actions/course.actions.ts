@@ -81,7 +81,32 @@ export async function getCourseBySlug({
         },
       },
     });
-    return findCourse;
+    return JSON.parse(JSON.stringify(findCourse));
+  } catch (e) {
+    console.error(e);
+  }
+}
+export async function getCourseBySearch({
+  params
+}: {params:{
+  page?: number;
+  limit?: number;
+  search?: string;
+}}): Promise<ICourse[] | undefined> {
+  try {
+    connectDB();
+    const { page = 1, limit = 10, search } = params;
+    const skip = (page - 1) * limit;
+    const query: FilterQuery<typeof Course> = {};
+    if (search) {
+      query.$or = [{ title: { $regex: search, $options: "i" } }];
+    }
+    const getAllCourse = await Course.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort({ create_at: -1 })
+      .select('_id title status');
+    return JSON.parse(JSON.stringify(getAllCourse));
   } catch (e) {
     console.error(e);
   }

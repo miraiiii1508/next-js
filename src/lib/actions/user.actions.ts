@@ -36,13 +36,24 @@ export async function getCourseByUser(): Promise<ICourse[] | undefined | null> {
     connectDB();
     const { userId } = auth();
     if (!userId) return null;
+
     const findUser = await User.findOne({ clerkId: userId }).populate({
-      path:"course",
-      model:Course,
-      match:{
-       status: ECourseStatus.APPROVED
-      }
+      path: "course",
+      model: Course,
+      match: {
+        status: ECourseStatus.APPROVED,
+      },
+      populate: {
+        path: "lectures",
+        model: "Lecture",
+        populate: {
+          path: "lesson",
+          model: "Lesson",
+          select: "slug", // Lấy chỉ trường 'slug'
+        },
+      },
     });
+
     if (!findUser) return null;
     return findUser.course;
   } catch (e) {
