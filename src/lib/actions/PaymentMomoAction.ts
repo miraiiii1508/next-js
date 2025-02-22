@@ -19,7 +19,7 @@ export interface MomoPaymentRequest {
 export interface MomoPaymentResponse {
   resultCode: number;
   message: string;
-  payUrl?: string; 
+  payUrl?: string;
   [key: string]: number | string | undefined;
 }
 
@@ -92,18 +92,15 @@ export async function createMomoPayment(
     );
 
     return response.data;
-  } catch (error: any) {
-    console.error(
-      "Error during payment creation:",
-      error.response?.data || error.message
-    );
+  } catch (error) {
+    console.error("Error during payment creation:", error);
     throw error;
   }
 }
 export const createResultMomo = async (
   orderId: string
 ): Promise<MomoPaymentResult> => {
-  const accessKey = 'F8BBA842ECF85';
+  const accessKey = "F8BBA842ECF85";
   const secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
   const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`;
   const signature = crypto

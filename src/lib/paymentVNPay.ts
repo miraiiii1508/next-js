@@ -22,8 +22,8 @@ export function createPaymentUrl(
   const returnUrl = url; // VNP_ReturnUrl
   const orderId = moment(date).format("DDHHmmss");
 
-  let currCode = "VND";
-  let vnp_Params: { [key: string]: any } = {
+  const currCode = "VND";
+  let vnp_Params: Record<string, string | number>  = {
     vnp_Version: "2.1.0",
     vnp_Command: "pay",
     vnp_TmnCode: tmnCode,
@@ -59,7 +59,7 @@ export const createResultVPN = async ({
 }) => {
   try {
     process.env.TZ = "Asia/Ho_Chi_Minh";
-    let date = new Date();
+    const date = new Date();
 
     const tmnCode = "MWHETFTN"; // VNP_TmnCode
     const secretKey = "YRYIU2ZPRKK1T6USGFVMZDG3IMW175OD"; // VNP_HashSecret

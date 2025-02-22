@@ -56,7 +56,7 @@ const OrderCourse = ({ data }: { data: IOrderProps[] }) => {
   useEffect(() => {
     router.push(`${pathname}?${createQueryString("page", page.toString())}`);
   }, [page]);
-  const handleDeleteCourse = (slug?: string) => {
+  const handleDeleteCourse = () => {
     try {
       Swal.fire({
         title: "Bạn có chắc chắn xoá ?",
