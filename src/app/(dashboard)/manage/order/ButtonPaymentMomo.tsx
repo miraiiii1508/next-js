@@ -1,0 +1,39 @@
+"use client";
+import { Button } from "@/components/ui/button";
+import {
+  createMomoPayment,
+  MomoPaymentRequest,
+} from "@/lib/actions/PaymentMomoAction";
+
+const ButtonPaymentMomo = ({_id ,amount , url}:{_id:string , amount:number , url:string}) => {
+  const paymentWithMomo = async () => {
+    try {
+      const params: MomoPaymentRequest = {
+        accessKey: "F8BBA842ECF85",
+        secretKey: "K951B6PE1waDMi640xX08PD3vg6EkVlz",
+        partnerCode: "MOMO",
+        amount: amount,
+        orderInfo: `Thanh toán hoá đơn KH${_id}`,
+        redirectUrl: url,
+        ipnUrl: url,
+        requestType: "payWithMethod",
+        autoCapture: true,
+        lang: "vi",
+      };
+
+      const response = await createMomoPayment(params);
+      if(response && response.payUrl){
+        window.location.href = response.payUrl;
+      }
+    } catch (error) {
+      console.error("Error during payment creation:", error);
+    }
+  };
+  return (
+    <Button onClick={paymentWithMomo} variant={"primary"}>
+      Thanh toán MoMo
+    </Button>
+  );
+};
+
+export default ButtonPaymentMomo;

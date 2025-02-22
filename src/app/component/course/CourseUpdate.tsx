@@ -69,9 +69,7 @@ const formSchema = z.object({
   }),
 });
 
-const CourseUpdate = ({ data }: { data: ICourse }) => {
-  console.log(data);
-  
+const CourseUpdate = ({ data }: { data: ICourse }) => {  
   const route = useRouter();
   const [isSubmiting, setIsSubmiting] = useState<boolean>(false);
   const [courseInfo, setCourseInfor] = useImmer({

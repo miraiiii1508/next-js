@@ -11,6 +11,7 @@ const StudyCourse = ({
 }: {
   courseList: ICourse[] | undefined | null;
 }) => {
+  
   if (!courseList || courseList.length <= 0) return null;
   const lastLesson =
     JSON.parse(localStorage.getItem(lastLessonKey) || "[]") || [];

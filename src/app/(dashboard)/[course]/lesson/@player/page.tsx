@@ -28,8 +28,6 @@ const page = async ({
     lessonList?.findIndex((item) => item.slug === slug) || 0;
   const nextLesson = lessonList?.[currentIndex + 1];
   const prevLesson = lessonList?.[currentIndex - 1];
-  console.log(nextLesson);
-  
   const video = lessonDetail?.video_url?.split("v=")[1]?.split("&")[0];
     const url = `/${course}/lesson?slug=${slug}`
   return (
