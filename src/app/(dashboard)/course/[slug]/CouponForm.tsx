@@ -4,7 +4,7 @@ import { ICoupon } from "@/database/coupon.modal";
 import { getValidateCoupon } from "@/lib/actions/coupon.actions";
 import { ECouponType } from "@/type/enum";
 import { debounce } from "lodash";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const CouponForm = ({

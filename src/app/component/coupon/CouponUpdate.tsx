@@ -80,7 +80,7 @@ const CouponUpdate = ({ data }: { data: ICoupon }) => {
   };
   const debouncedSearch = useCallback(
     debounce(() => getAllCourse(searchCourse), 250),
-    [searchCourse, page]
+    [searchCourse]
   );
   useEffect(() => {
     debouncedSearch();
@@ -90,7 +90,7 @@ const CouponUpdate = ({ data }: { data: ICoupon }) => {
   }, [debouncedSearch]);
   useEffect(() => {
     form.setValue("courses", selectedCourses);
-  }, [selectedCourses, form.setValue]);
+  }, [selectedCourses, form]);
   const couponTypeWatch = form.watch("type");
   async function onSubmit(value: z.infer<typeof couponFormSchema>) {
     setIsSubmiting(true);
