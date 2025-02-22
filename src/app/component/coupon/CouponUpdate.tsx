@@ -329,7 +329,7 @@ const CouponUpdate = ({ data }: { data: ICoupon }) => {
           <FormField
             control={form.control}
             name="courses"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Khoá học</FormLabel>
                 <FormControl>

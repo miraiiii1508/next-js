@@ -1,6 +1,5 @@
 import ButtonPaymentMomo from "@/app/(dashboard)/manage/order/ButtonPaymentMomo";
 import ButtonPaymentVnp from "@/app/(dashboard)/manage/order/ButtonPaymentVnp";
-import { IconReplay } from "@/app/component/icons";
 import LessonContent from "@/app/component/lesson/LessonContent";
 import Heading from "@/app/component/typography/Heading";
 import { createOrderCode } from "@/app/ultils";
@@ -10,7 +9,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
 import { courseLevelTitle } from "@/constants";
 import { getCourseBySlug } from "@/lib/actions/course.actions";
 import { createOrder } from "@/lib/actions/order.actions";

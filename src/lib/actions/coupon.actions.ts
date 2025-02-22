@@ -5,7 +5,6 @@ import { connectDB } from "../moogose";
 import { TCreateCoupon, TGetFilterParam, TUpdateCoupon } from "@/type/type";
 import { FilterQuery } from "mongoose";
 import { revalidatePath } from "next/cache";
-import { get } from "lodash";
 
 export async function createCoupon(params: TCreateCoupon) {
   try {

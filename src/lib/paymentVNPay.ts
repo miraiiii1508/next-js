@@ -67,16 +67,16 @@ export const createResultVPN = async ({
       "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
     const ipAddr = "127.0.0.1";
 
-    let vnp_TxnRef = orderId;
-    let vnp_TransactionDate = transDate;
+    const vnp_TxnRef = orderId;
+    const vnp_TransactionDate = transDate;
 
-    let vnp_RequestId = moment(date).format("HHmmss");
-    let vnp_Version = "2.1.0";
-    let vnp_Command = "querydr";
-    let vnp_OrderInfo = "Truy van GD ma: " + vnp_TxnRef;
+    const vnp_RequestId = moment(date).format("HHmmss");
+    const vnp_Version = "2.1.0";
+    const vnp_Command = "querydr";
+    const vnp_OrderInfo = "Truy van GD ma: " + vnp_TxnRef;
 
-    let vnp_CreateDate = moment(date).format("YYYYMMDDHHmmss");
-    let data =
+    const vnp_CreateDate = moment(date).format("YYYYMMDDHHmmss");
+    const data =
       vnp_RequestId +
       "|" +
       vnp_Version +
@@ -95,10 +95,10 @@ export const createResultVPN = async ({
       "|" +
       vnp_OrderInfo;
 
-    let hmac = crypto.createHmac("sha512", secretKey);
-    let vnp_SecureHash = hmac.update(Buffer.from(data, "utf-8")).digest("hex");
+    const hmac = crypto.createHmac("sha512", secretKey);
+    const vnp_SecureHash = hmac.update(Buffer.from(data, "utf-8")).digest("hex");
 
-    let dataObj = {
+    const dataObj = {
       vnp_RequestId: vnp_RequestId,
       vnp_Version: vnp_Version,
       vnp_Command: vnp_Command,
@@ -120,11 +120,13 @@ export const createResultVPN = async ({
     console.error(error);
   }
 };
-function sortObject(obj: { [key: string]: any }): { [key: string]: any } {
-  let sorted: { [key: string]: any } = {};
+function sortObject(obj: Record<string, string | number | undefined>): Record<string, string> {
+  const sorted: Record<string, string> = {};
   const keys = Object.keys(obj).sort();
-  for (let key of keys) {
-    sorted[key] = encodeURIComponent(obj[key]).replace(/%20/g, "+");
+  for (const key of keys) {
+    if (obj[key] !== undefined) {
+      sorted[key] = encodeURIComponent(String(obj[key])).replace(/%20/g, "+");
+    }
   }
   return sorted;
 }

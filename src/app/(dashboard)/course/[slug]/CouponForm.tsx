@@ -46,11 +46,13 @@ const CouponForm = ({
         toast.error("Mã giảm giá không hợp lệ !");
         return;
       }
-      couponType === ECouponType.PERCENT
-        ? (finalPrice = originalPrice - (originalPrice * response?.value) / 100)
-        : (finalPrice = originalPrice - response?.value);
+      if (couponType === ECouponType.PERCENT) {
+        finalPrice = originalPrice - (originalPrice * response?.value) / 100;
+      } else {
+        finalPrice = originalPrice - response?.value;
+      }
       setPrice(finalPrice);
-      setCouponValue(response as ICoupon);
+      setCouponValue(response );
       setIsApplied(true);
       setCouponCode("");
       inputRef.current?.value && (inputRef.current.value = "");

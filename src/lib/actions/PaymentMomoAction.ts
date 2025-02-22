@@ -19,15 +19,15 @@ export interface MomoPaymentRequest {
 export interface MomoPaymentResponse {
   resultCode: number;
   message: string;
-  payUrl?: string; // URL QR code hoặc URL trang thanh toán
-  [key: string]: any;
+  payUrl?: string; 
+  [key: string]: number | string | undefined;
 }
 
 export interface MomoPaymentResult {
   resultCode: number;
   message: string;
   payType: string;
-  [key: string]: any;
+  [key: string]: number | string | undefined;
 }
 
 function generateSignature(secretKey: string, rawSignature: string): string {
@@ -105,7 +105,7 @@ export const createResultMomo = async (
 ): Promise<MomoPaymentResult> => {
   const accessKey = 'F8BBA842ECF85';
   const secretKey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
-  let rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`;
+  const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=MOMO&requestId=${orderId}`;
   const signature = crypto
     .createHmac("sha256", secretKey)
     .update(rawSignature)

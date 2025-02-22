@@ -30,7 +30,6 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { IconEye, IconStudy } from "../icons";
-import IconDelete from "../icons/IconDelete";
 import IconEdit from "../icons/IconEdit";
 import IconNext from "../icons/IconNext";
 import IconPrev from "../icons/IconPrev";

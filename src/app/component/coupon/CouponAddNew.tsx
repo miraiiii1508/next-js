@@ -324,7 +324,7 @@ const CouponAddNew = () => {
           <FormField
             control={form.control}
             name="courses"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Khoá học</FormLabel>
                 <FormControl>

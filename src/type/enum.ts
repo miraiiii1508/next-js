@@ -42,4 +42,4 @@ enum ECouponStatus {
     true='true',
     fales='false'
 }
-export { userStatus,EUserRole,ECourseStatus,ECourseLevel,ELessonType,EOrderStatus ,ECouponType,EPaymentType} 
+export { userStatus,EUserRole,ECourseStatus,ECourseLevel,ELessonType,EOrderStatus ,ECouponType,EPaymentType,ECouponStatus} 

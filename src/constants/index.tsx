@@ -1,7 +1,6 @@
 import {
   IconComment,
   IconCoupon,
-  IconExplore,
   IconMange,
   IconMember,
   IconReplay,

@@ -18,18 +18,17 @@ import {
 } from "@/components/ui/table";
 import { commonClassName, orderStatus } from "@/constants";
 import useQueryString from "@/hooks/useQueryString";
+import { cn } from "@/lib/utils";
+import { EOrderStatus } from "@/type/enum";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { StatusBadge } from "../common";
+import IconDelete from "../icons/IconDelete";
 import IconNext from "../icons/IconNext";
 import IconPrev from "../icons/IconPrev";
 import Heading from "../typography/Heading";
-import { EOrderStatus } from "@/type/enum";
-import { usePathname, useRouter } from "next/navigation";
-import { debounce } from "lodash";
-import Swal from "sweetalert2";
-import { toast } from "react-toastify";
-import IconDelete from "../icons/IconDelete";
-import { cn } from "@/lib/utils";
 interface IOrderProps {
   code: string;
   course: { title: string };

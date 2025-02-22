@@ -1,4 +1,4 @@
-import { ECouponType, EOrderStatus } from "@/type/enum";
+import { ECouponType } from "@/type/enum";
 import { model, models, Schema } from "mongoose";
 
 export interface ICoupon extends Document {

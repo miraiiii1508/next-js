@@ -4,12 +4,13 @@ import { ICoupon } from "@/database/coupon.modal";
 import { useState } from "react";
 import ButtonEnroll from "./[slug]/ButtonEnroll";
 import CouponForm from "./[slug]/CouponForm";
+import { TCourseUpdateLecture } from "@/type/type";
 const CourseWidget = ({
   data,
   userId,
 
 }: {
-  data: any;
+  data: TCourseUpdateLecture;
   userId: string | null;
 
 }) => {
