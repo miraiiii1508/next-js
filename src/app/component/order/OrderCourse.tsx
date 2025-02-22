@@ -55,7 +55,7 @@ const OrderCourse = ({ data }: { data: IOrderProps[] }) => {
   };
   useEffect(() => {
     router.push(`${pathname}?${createQueryString("page", page.toString())}`);
-  }, [page]);
+  }, [page , router , pathname , createQueryString]);
   const handleDeleteCourse = () => {
     try {
       Swal.fire({

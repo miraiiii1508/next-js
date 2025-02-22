@@ -71,7 +71,7 @@ const CouponManage = ({ data }: { data: ICoupon[] }) => {
   };
   useEffect(() => {
     router.push(`${pathname}?${createQueryString("page", page.toString())}`);
-  }, [page]);
+  }, [page, pathname, router, createQueryString]);
   return (
     <>
       <Link

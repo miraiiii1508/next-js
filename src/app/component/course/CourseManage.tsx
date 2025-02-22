@@ -111,7 +111,7 @@ const CourseManage = ({ data }: { data: ICourse[] }) => {
   };
   useEffect(() => {
     router.push(`${pathname}?${createQueryString("page", page.toString())}`);
-  }, [page]);
+  }, [page ,router ,pathname , createQueryString]);
   return (
     <>
       <Link

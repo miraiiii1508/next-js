@@ -24,7 +24,6 @@ const CouponForm = ({
 }) => {
 
   const [isApplied, setIsApplied] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     setIsApplied(false);
   }, [couponCode]);
@@ -55,7 +54,6 @@ const CouponForm = ({
       setCouponValue(response );
       setIsApplied(true);
       setCouponCode("");
-      inputRef.current?.value && (inputRef.current.value = "");
       toast.success("Áp dụng mã giảm giá thành công !");
     } catch (e) {
       console.error(e);
@@ -68,7 +66,6 @@ const CouponForm = ({
         className="pr-20 uppercase font-semibold"
         onChange={handleChangeCoupon}
         defaultValue={couponCode}
-        ref={inputRef}
       />
       <button
         className="absolute right-5 top-1/2 -translate-y-1/2 font-medium text-sm"
