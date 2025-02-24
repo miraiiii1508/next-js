@@ -63,7 +63,7 @@ const ButtonEnroll = ({
     resolver: zodResolver(formSchema),
     defaultValues: {},
   });
-  
+
   const handleEnrollCourse = () => {
     if (!userId) {
       toast.error("Vui lòng đăng nhập để mua khoá học");
@@ -83,14 +83,14 @@ const ButtonEnroll = ({
           PaymentWithMomo({
             _id: courseId,
             amount: price,
-            url: `http://localhost:3000/course/${slug}`,
+            url: `${process.env.NEXT_DEV_BLOG_REDIRECT_URI}/course/${slug}`,
           });
 
           break;
         case EPaymentType.VNPay:
           paymentWithVnPay({
             amount: price,
-            url: `http://localhost:3000/course/${slug}`,
+            url: `${process.env.NEXT_DEV_BLOG_REDIRECT_URI}/course/${slug}`,
           });
           break;
         case EPaymentType.MBBANK:

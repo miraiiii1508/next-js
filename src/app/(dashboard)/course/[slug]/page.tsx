@@ -44,7 +44,6 @@ const page = async ({
   if (orderId) {
     const response = await createResultMomo(orderId);
     if (response.resultCode === 0) {
-      
       await createOrder({
         user: findUser._id,
         course: data._id,
@@ -52,7 +51,7 @@ const page = async ({
         amount: data.price,
         total: amount ? parseInt(amount) : 0,
       });
-      redirect(`http://localhost:3000/course/${data.slug}`); 
+      redirect(`/course/${data.slug}`);
     }
   }
 
@@ -72,9 +71,9 @@ const page = async ({
           course: data._id,
           code: createOrderCode(),
           amount: data.price,
-          total: vnp_Amount ? parseInt(vnp_Amount) / 100 : 0
+          total: vnp_Amount ? parseInt(vnp_Amount) / 100 : 0,
         });
-        redirect(`http://localhost:3000/course/${data.slug}`); 
+        redirect(`/course/${data.slug}`);
       }
     }
   }
