@@ -83,14 +83,14 @@ const ButtonEnroll = ({
           PaymentWithMomo({
             _id: courseId,
             amount: price,
-            url: `${process.env.NEXT_DEV_BLOG_REDIRECT_URI}/course/${slug}`,
+            url: `${process.env.NEXT_PUBLIC_DEV_BLOG_REDIRECT_URI}/course/${slug}`,
           });
 
           break;
         case EPaymentType.VNPay:
           paymentWithVnPay({
             amount: price,
-            url: `${process.env.NEXT_DEV_BLOG_REDIRECT_URI}/course/${slug}`,
+            url: `${process.env.NEXT_PUBLIC_DEV_BLOG_REDIRECT_URI}/course/${slug}`,
           });
           break;
         case EPaymentType.MBBANK:

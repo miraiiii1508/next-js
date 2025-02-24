@@ -51,7 +51,9 @@ const page = async ({
         amount: data.price,
         total: amount ? parseInt(amount) : 0,
       });
-      redirect(`/course/${data.slug}`);
+      redirect(
+        `${process.env.NEXT_PUBLIC_DEV_BLOG_REDIRECT_URI}/course/${data.slug}`
+      );
     }
   }
 
@@ -73,7 +75,9 @@ const page = async ({
           amount: data.price,
           total: vnp_Amount ? parseInt(vnp_Amount) / 100 : 0,
         });
-        redirect(`/course/${data.slug}`);
+        redirect(
+          `${process.env.NEXT_PUBLIC_DEV_BLOG_REDIRECT_URI}/course/${data.slug}`
+        );
       }
     }
   }
